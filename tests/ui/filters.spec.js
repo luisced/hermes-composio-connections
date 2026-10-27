@@ -1,0 +1,46 @@
+import {test,expect} from '@playwright/test';
+test.beforeEach(async({page})=>{await page.goto('/');await expect(page.getByTestId('connection-row')).toHaveCount(3)});
+test('account_filters_combine_with_search_and_clear',async({page})=>{
+ await page.getByLabel('Estado de conexión',{exact:true}).selectOption('EXPIRED');
+ await expect(page.getByTestId('connection-row')).toHaveCount(1);
+ await page.getByLabel('Buscar conexiones').fill('personal');
+ await expect(page.getByTestId('connection-row')).toHaveCount(0);
+ await page.getByRole('button',{name:'Limpiar filtros',exact:true}).click();
+ await expect(page.getByTestId('connection-row')).toHaveCount(3);
+ await expect(page.getByLabel('Buscar conexiones')).toHaveValue('');
+});
+test('catalog_category_connection_and_auth_filters_intersect',async({page})=>{
+ await page.evaluate(()=>window.fixture.catalog=[{slug:'gmail',name:'Gmail',categories:['communication'],managed_auth:true},{slug:'slack',name:'Slack',categories:['communication'],managed_auth:true},{slug:'zendesk',name:'Zendesk',categories:['crm'],managed_auth:false},{slug:'public_api',name:'Public API',categories:['communication'],no_auth:true,managed_auth:false}]);
+ await page.getByRole('button',{name:'Conectar servicio',exact:true}).click();
+ const grid=page.getByLabel('Catálogo de servicios',{exact:true});
+ await expect(grid.getByRole('button')).toHaveCount(4);
+ await page.getByLabel('Categoría',{exact:true}).selectOption('communication');
+ await page.getByLabel('Disponibilidad de conexión',{exact:true}).selectOption('unconnected');
+ await page.getByLabel('Autenticación',{exact:true}).selectOption('managed');
+ await expect(grid.getByRole('button')).toHaveCount(1);
+ await expect(grid.getByRole('button',{name:'Slack',exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'Limpiar filtros',exact:true}).click();
+ await expect(grid.getByRole('button')).toHaveCount(4);
+ await page.getByLabel('Autenticación',{exact:true}).selectOption('none');
+ await expect(grid.getByRole('button',{name:'Public API',exact:true})).toBeVisible();
+ await expect(grid.getByRole('button')).toHaveCount(1);
+ await page.getByLabel('Autenticación',{exact:true}).selectOption('custom');
+ await expect(grid.getByRole('button',{name:'Zendesk',exact:true})).toBeVisible();
+});
+test('expired_accounts_count_as_connected_and_service_filter_preserves_duplicates',async({page})=>{
+ await page.evaluate(()=>window.fixture.rows.push({key:'slack:one',toolkit:'slack',alias:null,status:'FAILED',selector:'slack_one',removable:true}));
+ await page.getByRole('button',{name:'Actualizar',exact:true}).click();
+ await page.getByLabel('Servicio de conexión',{exact:true}).selectOption('gmail');
+ await expect(page.getByTestId('connection-row')).toHaveCount(3);
+ await page.getByLabel('Servicio de conexión',{exact:true}).selectOption('slack');
+ await page.getByLabel('Estado de conexión',{exact:true}).selectOption('FAILED');
+ await expect(page.getByTestId('connection-row')).toHaveCount(1);
+ await page.evaluate(()=>window.fixture.catalog=[{slug:'slack',name:'Slack'},{slug:'notion',name:'Notion'}]);
+ await page.getByRole('button',{name:'Conectar servicio',exact:true}).click();
+ await page.getByLabel('Disponibilidad de conexión',{exact:true}).selectOption('connected');
+ const grid=page.getByLabel('Catálogo de servicios',{exact:true});
+ await expect(grid.getByRole('button')).toHaveCount(1);
+ await expect(grid.getByRole('button',{name:'Slack',exact:true})).toBeVisible();
+ await page.getByLabel('Disponibilidad de conexión',{exact:true}).selectOption('unconnected');
+ await expect(grid.getByRole('button',{name:'Notion',exact:true})).toBeVisible();
+});

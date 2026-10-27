@@ -1,0 +1,9 @@
+name: composio-connections
+label: Composio Connections
+version: 0.1.7
+requires_hermes: ">=0.22.5"
+description: "Desktop and web dashboard account connections backed by the existing Composio CLI."
+provides_tools: []
+provides_hooks: []
+requires_env:
+  - COMPOSIO_USER_API_KEY

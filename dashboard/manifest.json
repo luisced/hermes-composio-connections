@@ -1,0 +1,1 @@
+{"name":"composio-connections","label":"Composio","version":"0.1.7","description":"Connect and disconnect Composio accounts","api":"plugin_api.py","icon":"Plug","tab":{"path":"/composio-connections","position":"after:analytics"},"entry":"dist/index.js","css":"dist/index.css"}

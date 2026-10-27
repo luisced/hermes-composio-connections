@@ -1,0 +1,1 @@
+{"private":true,"type":"module","scripts":{"test":"playwright test","serve":"vite --host 127.0.0.1 --port 5187"},"dependencies":{"react":"^19.0.0","react-dom":"^19.0.0","@tanstack/react-query":"^5.0.0"},"devDependencies":{"vite":"^6.0.0","@playwright/test":"^1.56.0"}}

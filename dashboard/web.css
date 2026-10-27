@@ -1,0 +1,13 @@
+/* Desktop token aliases scoped to this page; do not restyle the host shell. */
+.composio-dashboard {
+  /* Dashboard's foreground is an overlay (often transparent), not text. */
+  --ui-text-primary: var(--midground, #e5e5e5);
+  --ui-text-secondary: color-mix(in srgb, var(--midground, #e5e5e5) 65%, var(--background, #202020));
+  --ui-stroke-secondary: color-mix(in srgb, var(--midground, #e5e5e5) 22%, var(--background, #202020));
+  --ui-bg-elevated: var(--background, #202020);
+  height: 100%; min-height: 0; min-width: 0;
+}
+.composio-dashboard select { color-scheme: dark; }
+@media (max-width: 600px) {
+  .composio-dashboard > section { padding: 16px !important; }
+}
