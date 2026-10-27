@@ -2,9 +2,11 @@
 
 Connect and disconnect Composio accounts from Hermes. The same page runs in Hermes Desktop and in the web dashboard.
 
+![Hermes Desktop, Connect a service, on the public Composio catalog](docs/images/catalog.png)
+
 It lists every row the Composio CLI returns: active, expired, duplicated, and accounts with no alias. OAuth opens in your browser. Disconnect names the exact account and checks that it is gone. The assistant keeps using the Composio CLI. This plugin does not add agent tools.
 
-The account pictures use example data. The catalog picture is the Hermes Desktop plugin, on the public Composio catalog.
+The account pictures below use example data. The picture above is the Hermes Desktop plugin.
 
 ![Four example accounts: Gmail, Slack, an expired Notion connection, and GitHub](docs/images/connections.png)
 
@@ -28,14 +30,23 @@ Filters stack. The first account stays on screen. Nothing has to scroll sideways
 
 ## Install
 
-Hermes 0.22.5 or newer.
+Hermes 0.22.5 or newer. The packaged release is [v0.1.7](https://github.com/luisced/hermes-composio-connections/releases/tag/v0.1.7).
+
+From Git, which tracks this repository:
 
 ```sh
 hermes plugins install luisced/hermes-composio-connections
 hermes plugins enable composio-connections
 ```
 
-The catalog needs `COMPOSIO_USER_API_KEY` in the Hermes secret store for that profile. Inventory, connect, and disconnect use a logged-in `composio` CLI on the gateway. The key never goes to the browser.
+Or install the release package. It unpacks to `composio-connections/` with `plugin.yaml` at the top of that folder:
+
+```sh
+unzip composio-connections-0.1.7.zip -d ~/.hermes/plugins
+hermes plugins enable composio-connections
+```
+
+Check `SHA256SUMS` before unpacking. The catalog needs `COMPOSIO_USER_API_KEY` in the Hermes secret store for that profile. Inventory, connect, and disconnect use a logged-in `composio` CLI on the gateway. The key never goes to the browser.
 
 On the machine that runs Hermes Desktop, install the desktop file as well:
 
