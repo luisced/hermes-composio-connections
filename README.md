@@ -4,7 +4,7 @@ Connect and disconnect Composio accounts from Hermes. The same page runs in Herm
 
 It lists every row the Composio CLI returns: active, expired, duplicated, and accounts with no alias. OAuth opens in your browser. Disconnect names the exact account and checks that it is gone. The assistant keeps using the Composio CLI. This plugin does not add agent tools.
 
-The pictures below use example accounts. They are not a live inventory.
+The account pictures use example data. The catalog picture is the Hermes Desktop plugin, on the public Composio catalog.
 
 ![Four example accounts: Gmail, Slack, an expired Notion connection, and GitHub](docs/images/connections.png)
 
@@ -12,7 +12,7 @@ The pictures below use example accounts. They are not a live inventory.
 
 The catalog is the official Composio toolkit list, not only the services you already have. Logos are packed into the plugin, so opening the page does not call an image host. Search and filters apply before the list pages itself.
 
-![Service catalog with Gmail, Slack, Notion, GitHub, Linear, Google Calendar, Airtable, and Hacker News](docs/images/catalog.png)
+![Hermes Desktop service catalog, first page of the public Composio list](docs/images/catalog.png)
 
 ## Disconnect one account
 
